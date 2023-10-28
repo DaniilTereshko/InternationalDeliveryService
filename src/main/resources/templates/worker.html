@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Package</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+<div class="content">
+  <h1>Update Package</h1>
+  <form action="/worker" method="post">
+    <div class="form-group">
+      <label for="id">Order Number:</label>
+      <input type="text" id="id" name="id" required>
+    </div>
+    <div class="form-group">
+      <label>Order Size:</label>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="size" value="SMALL" required> Small
+        </label>
+        <label>
+          <input type="radio" name="size" value="MEDIUM" required> Medium
+        </label>
+        <label>
+          <input type="radio" name="size" value="LARGE" required> Large
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Package</button>
+    <div th:if="${statistic}">
+      <h2>Package Count:</h2>
+      <ul>
+        <li>All Packages: <span th:text="${statistic.packages}"></span></li>
+        <li>Small Packages: <span th:text="${statistic.smallPackages}"></span></li>
+        <li>Medium Packages: <span th:text="${statistic.mediumPackages}"></span></li>
+        <li>Large Packages: <span th:text="${statistic.largePackages}"></span></li>
+      </ul>
+    </div>
+  </form>
+  <div th:if="${error}" class="error-message">
+    <p th:text="${error}"></p>
+  </div>
+  <div th:if="${ok}" class="ok-message">
+    <p th:text="${ok}"></p>
+  </div>
+</div>
+<footer>
+  <p>&copy; 2023 International Delivery</p>
+</footer>
+</body>
+</html>

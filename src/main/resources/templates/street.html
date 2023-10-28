@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Создание улицы</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+<div class="content">
+  <h1>Создание новой улицы</h1>
+
+  <form action="/street" method="post">
+    <div class="form-group">
+      <label for="name">Название улицы:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <br>
+    <div class="form-group">
+      <label for="department">Департамент:</label>
+      <select id="department" name="department">
+        <option th:each="dep : ${departments}" th:value="${dep.name}" th:text="${dep.name}"></option>
+      </select>
+    </div>
+    <button type="submit">Подтвердить</button>
+  </form>
+  <div th:if="${error}" class="error-message">
+    <p th:text="${error}"></p>
+  </div>
+  <div th:if="${ok}" class="ok-message">
+    <p th:text="${ok}"></p>
+  </div>
+</div>
+<footer>
+  <p>&copy; 2023 International Delivery</p>
+</footer>
+</body>
+</html>

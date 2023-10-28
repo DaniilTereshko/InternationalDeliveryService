@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Создание департамента</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+<div class="content">
+    <h1>Создание нового департамента</h1>
+    <form action="/department" method="post">
+        <div class="form-group">
+            <label for="name">Название департамента:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <button type="submit">Подтвердить</button>
+    </form>
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${ok}" class="ok-message">
+        <p th:text="${ok}"></p>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2023 International Delivery</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Department Information</title>
+  <link th:href="@{/css/styles.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+<div class="content">
+  <h1>Department Information</h1>
+  <form action="/department/info" method="post">
+    <div class="form-group">
+      <label for="department">Select Department:</label>
+      <select id="department" name="department">
+        <option value="">-- Select Department --</option>
+        <option th:each="dept : ${departments}" th:value="${dept.name}" th:text="${dept.name}"></option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Confirm</button>
+  </form>
+
+  <div th:if="${departmentStatistic}">
+    <h2>Streets of Department:</h2>
+    <ul>
+      <li th:each="street : ${departmentStatistic.streets}" th:text="${street.name}"></li>
+    </ul>
+    <h2>Package Count:</h2>
+    <ul>
+      <li>All Packages: <span th:text="${departmentStatistic.packages}"></span></li>
+      <li>Small Packages: <span th:text="${departmentStatistic.smallPackages}"></span></li>
+      <li>Medium Packages: <span th:text="${departmentStatistic.mediumPackages}"></span></li>
+      <li>Large Packages: <span th:text="${departmentStatistic.largePackages}"></span></li>
+    </ul>
+  </div>
+</div>
+<footer>
+  <p>&copy; 2023 International Delivery</p>
+</footer>
+</body>
+</html>

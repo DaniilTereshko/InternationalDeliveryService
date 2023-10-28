@@ -1,0 +1,24 @@
+<header>
+  <div class="header">
+    <div class="header-buttons">
+      <a sec:authorize="!isAuthenticated()" th:href="@{/registration}">Registration</a>
+      <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Log In</a>
+      <a th:href="@{/logout}" sec:authorize="isAuthenticated()">Log Out</a>
+    </div>
+    <div class="user-info">
+      <div sec:authorize="isAuthenticated()">
+        <span sec:authentication="name"></span>
+        <span sec:authentication="principal.authorities"></span>
+      </div>
+      <div class="user-buttons" sec:authorize="isAuthenticated()">
+        <a th:href="@{/package}" sec:authorize="isAuthenticated()">Send Package</a>
+      </div>
+      <div class="admin-buttons" sec:authorize="isAuthenticated()">
+        <a th:href="@{/worker}" sec:authorize="hasRole('ROLE_WORKER')">Order</a>
+        <a th:href="@{/department}" sec:authorize="hasRole('ROLE_ADMIN')">Add Department</a>
+        <a th:href="@{/street}" sec:authorize="hasRole('ROLE_ADMIN')">Add Street</a>
+        <a th:href="@{/department/info}" sec:authorize="hasRole('ROLE_ADMIN')">Add Info</a>
+      </div>
+    </div>
+  </div>
+</header>
