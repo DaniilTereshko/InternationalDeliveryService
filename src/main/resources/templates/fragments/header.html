@@ -14,10 +14,10 @@
         <a th:href="@{/package}" sec:authorize="isAuthenticated()">Send Package</a>
       </div>
       <div class="admin-buttons" sec:authorize="isAuthenticated()">
-        <a th:href="@{/worker}" sec:authorize="hasRole('ROLE_WORKER')">Order</a>
+        <a th:href="@{/worker}" sec:authorize="hasRole('ROLE_WORKER') || hasRole('ROLE_ADMIN')">Order</a>
         <a th:href="@{/department}" sec:authorize="hasRole('ROLE_ADMIN')">Add Department</a>
         <a th:href="@{/street}" sec:authorize="hasRole('ROLE_ADMIN')">Add Street</a>
-        <a th:href="@{/department/info}" sec:authorize="hasRole('ROLE_ADMIN')">Add Info</a>
+        <a th:href="@{/department/info}" sec:authorize="hasRole('ROLE_ADMIN')">Department Info</a>
       </div>
     </div>
   </div>

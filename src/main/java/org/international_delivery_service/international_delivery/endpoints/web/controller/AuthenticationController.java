@@ -3,6 +3,7 @@ package org.international_delivery_service.international_delivery.endpoints.web.
 import org.international_delivery_service.international_delivery.core.dto.base.UserRegistrationDTO;
 import org.international_delivery_service.international_delivery.core.exception.LoginAlreadyTakenException;
 import org.international_delivery_service.international_delivery.service.api.IAuthenticationService;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,7 +31,7 @@ public class AuthenticationController {
             model.addAttribute("error", e.getMessage());
             return "registration";
         }
-        return "package";
+        return "login";
     }
     @GetMapping("/login")
     public String login() {

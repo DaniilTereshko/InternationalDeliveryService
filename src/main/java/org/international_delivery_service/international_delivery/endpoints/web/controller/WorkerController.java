@@ -2,6 +2,8 @@ package org.international_delivery_service.international_delivery.endpoints.web.
 
 import org.international_delivery_service.international_delivery.core.dto.create.UpdatePackageDTO;
 import org.international_delivery_service.international_delivery.core.enums.PackageSize;
+import org.international_delivery_service.international_delivery.core.exception.PackageAlreadyUpdatedException;
+import org.international_delivery_service.international_delivery.core.exception.PackageNotFoundException;
 import org.international_delivery_service.international_delivery.core.exception.StreetNotDepartmentException;
 import org.international_delivery_service.international_delivery.dao.entity.Package;
 import org.international_delivery_service.international_delivery.service.impl.PackageService;
@@ -29,17 +31,17 @@ public class WorkerController {
     }
     @PostMapping("/worker")
     public String update(@RequestParam("id") Long id, @RequestParam("size") PackageSize size, Model model){
-        model.addAttribute("statistic", this.statisticService.getPackageStatists());
         UpdatePackageDTO dto = new UpdatePackageDTO(id, size);
         Package updatedPackage = null;
         try {
             updatedPackage = this.packageService.update(dto);
-        }catch (StreetNotDepartmentException e){
+        }catch (PackageNotFoundException | PackageAlreadyUpdatedException e){
             model.addAttribute("error", e.getMessage());
         }
         if(updatedPackage != null){
             model.addAttribute("ok", PACKAGING_COMPLETE);
         }
+        model.addAttribute("statistic", this.statisticService.getPackageStatists());
         return "worker";
     }
 }

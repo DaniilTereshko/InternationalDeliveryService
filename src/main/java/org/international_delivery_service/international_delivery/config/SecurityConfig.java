@@ -13,12 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -39,8 +37,8 @@ public class SecurityConfig {
                     authorize
                             .requestMatchers("/images/**", "/css/**", "/js/**", "/WEB-INF/views/**").permitAll()
                             .requestMatchers("/package").authenticated()
-                            .requestMatchers("/registration").permitAll()
-                            .requestMatchers("/worker").hasRole("WORKER")
+                            .requestMatchers("/registration").anonymous()
+                            .requestMatchers("/worker").hasAnyRole("ADMIN", "WORKER")
                             .requestMatchers("/street", "/department").hasRole("ADMIN")
                             .requestMatchers("/department/info").hasAnyRole("ADMIN", "WORKER")
                             .anyRequest().authenticated();
@@ -48,7 +46,7 @@ public class SecurityConfig {
                 .logout(logout -> {
                     logout
                             .logoutUrl("/logout")
-                            .logoutSuccessUrl("/");
+                            .logoutSuccessUrl("/login");
                 });
 
         http.userDetailsService(userDetailsService);

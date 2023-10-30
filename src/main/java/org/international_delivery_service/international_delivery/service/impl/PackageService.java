@@ -3,6 +3,7 @@ package org.international_delivery_service.international_delivery.service.impl;
 import org.international_delivery_service.international_delivery.core.dto.create.CreatePackageDTO;
 import org.international_delivery_service.international_delivery.core.dto.create.UpdatePackageDTO;
 import org.international_delivery_service.international_delivery.core.enums.PackageSize;
+import org.international_delivery_service.international_delivery.core.exception.PackageAlreadyUpdatedException;
 import org.international_delivery_service.international_delivery.core.exception.PackageNotFoundException;
 import org.international_delivery_service.international_delivery.core.exception.StreetNotDepartmentException;
 import org.international_delivery_service.international_delivery.dao.entity.Department;
@@ -19,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class PackageService implements IPackageService {
     private static final String STREET_ERROR = "Данная улица принадлежит к другому департаменту";
     private static final String PACKAGE_NOT_FOUND = "Посылки с таким номером нет";
+    private static final String PACKAGE_ALREADY_UPDATED = "Посылка уже оформлена";
     private final UserHolder userHolder;
     private final IUserService userService;
     private final IDepartmentService departmentService;
@@ -50,7 +52,10 @@ public class PackageService implements IPackageService {
     @Override
     public Package update(UpdatePackageDTO dto) {
         Package aPackage = this.packageRepository.getById(dto.getId())
-                .orElseThrow(() -> new PackageNotFoundException((PACKAGE_NOT_FOUND)));
+                .orElseThrow(() -> new PackageNotFoundException(PACKAGE_NOT_FOUND));
+        if(aPackage.getSize() != null){
+            throw new PackageAlreadyUpdatedException(PACKAGE_ALREADY_UPDATED);
+        }
         aPackage.setSize(dto.getSize());
         return this.packageRepository.save(aPackage);
     }
